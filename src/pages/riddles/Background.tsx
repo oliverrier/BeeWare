@@ -19,11 +19,11 @@ import { Riddle } from '../../models/Riddle';
 import { checkCode } from '../../utils/utils';
 import { Plugins, AppState } from '@capacitor/core';
 import { useHistory } from "react-router-dom";
-const { App } = Plugins;
 
 
 
 const Background: React.FC<{ riddle: Riddle }> = (props) => {
+  const { App } = Plugins;
   const appCtx = useContext(AppContext);
   const history = useHistory();
   const [timeStart] = useState(new Date())
@@ -44,7 +44,6 @@ const Background: React.FC<{ riddle: Riddle }> = (props) => {
     let updateRiddle = { ...props.riddle };
     updateRiddle.isSuccess = true;
     updateRiddle.timeSec = (new Date().getTime() - timeStart.getTime()) / 1000;
-    console.log("yolo")
     appCtx.updateRiddle(updateRiddle);
     App.removeAllListeners();
     history.replace("/")

@@ -12,7 +12,6 @@ const AppContextProvider: React.FC = (props) => {
   const didMountRef = useRef(false);
 
   useEffect(() => {
-    console.log('didmount mes couilles avant ifelse', didMountRef.current)
     if (didMountRef.current) {
       Storage.set({ key: 'profile', value: JSON.stringify(profile) });
       Storage.set({ key: 'riddles', value: JSON.stringify(riddles) });
@@ -20,7 +19,6 @@ const AppContextProvider: React.FC = (props) => {
     else {
       didMountRef.current = true;
     }
-    console.log('didmount mes couilles après ifelse', didMountRef.current)
 
   }, [profile, riddles]);
 
@@ -38,7 +36,6 @@ const AppContextProvider: React.FC = (props) => {
   };
 
   const initContext = async () => {
-    console.log("initContext")
     const profileData = await Storage.get({ key: 'profile' });
     const riddlesData = await Storage.get({ key: 'riddles' });
     const storedProfile = profileData.value

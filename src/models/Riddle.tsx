@@ -1,5 +1,7 @@
-import Background from '../pages/riddles/Background ';
+import Background from '../pages/riddles/Background';
 import TreasureHunt from '../pages/riddles/TreasureHunt';
+import Light from '../pages/riddles/Light';
+
 export interface Riddle {
   id: string;
   image: string;
@@ -24,18 +26,18 @@ export const defaultRiddles: Riddle[] = [
   {
     id: '2',
     image:
-      'http://goraguer.fr/wp/wp-content/uploads/2012/06/Appartement-marais-5.jpg',
-    name: 'riddle-2',
-    difficulty: 1,
+      'https://cdn.discordapp.com/attachments/768961466145308702/785223146063921162/file.jpg',
+    name: 'Light',
+    difficulty: 2,
     timeSec: 0,
     isSuccess: false,
-    component: null,
+    component: Light,
   },
   {
     id: '3',
     image: 'https://zupimages.net/up/20/49/vpcw.jpg',
     name: 'Background',
-    difficulty: 1,
+    difficulty: 3,
     timeSec: 1,
     isSuccess: false,
     component: Background,
