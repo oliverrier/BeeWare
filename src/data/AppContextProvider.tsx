@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import AppContext from './app-context';
 import { Riddle, defaultRiddles } from '../models/Riddle';
 import { Profile, defaultProfile } from '../models/Profile';
-import { GeolocationPosition, Plugins } from '@capacitor/core';
+import { Plugins } from '@capacitor/core';
 
 const { Storage } = Plugins;
 
@@ -12,16 +12,14 @@ const AppContextProvider: React.FC = (props) => {
   const didMountRef = useRef(false);
 
   useEffect(() => {
-    console.log('didmount mes couilles avant ifelse', didMountRef.current)
+    console.log('didmount mes couilles avant ifelse', didMountRef.current);
     if (didMountRef.current) {
       Storage.set({ key: 'profile', value: JSON.stringify(profile) });
       Storage.set({ key: 'riddles', value: JSON.stringify(riddles) });
-    }
-    else {
+    } else {
       didMountRef.current = true;
     }
-    console.log('didmount mes couilles après ifelse', didMountRef.current)
-
+    console.log('didmount mes couilles après ifelse', didMountRef.current);
   }, [profile, riddles]);
 
   const updateRiddle = (updateRiddle: Riddle) => {
@@ -38,7 +36,7 @@ const AppContextProvider: React.FC = (props) => {
   };
 
   const initContext = async () => {
-    console.log("initContext")
+    console.log('initContext');
     const profileData = await Storage.get({ key: 'profile' });
     const riddlesData = await Storage.get({ key: 'riddles' });
     const storedProfile = profileData.value
@@ -51,9 +49,13 @@ const AppContextProvider: React.FC = (props) => {
     setRiddles(storedRiddles);
   };
 
-  return <AppContext.Provider value={{ initContext, riddles, profile, updateProfile, updateRiddle, }}>
-    {props.children}
-  </AppContext.Provider>
+  return (
+    <AppContext.Provider
+      value={{ initContext, riddles, profile, updateProfile, updateRiddle }}
+    >
+      {props.children}
+    </AppContext.Provider>
+  );
 };
 
 export default AppContextProvider;

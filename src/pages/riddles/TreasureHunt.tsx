@@ -1,3 +1,4 @@
+import { GeolocationPosition } from '@capacitor/core';
 import { Geolocation } from '@capacitor/core/dist/esm/web/geolocation';
 import {
   IonButton,
@@ -6,50 +7,53 @@ import {
   IonContent,
   IonGrid,
   IonIcon,
+  IonInput,
+  IonItem,
   IonLabel,
   IonRow,
 } from '@ionic/react';
 import { save } from 'ionicons/icons';
 import React, { useContext, useEffect, useState } from 'react';
 import AppContext from '../../data/app-context';
+import { Riddle } from '../../models/Riddle';
 import { checkCode } from '../../utils/utils';
 
-const TreasureHunt: React.FC = () => {
+interface Position {
+  latitude: number;
+  longitude: number;
+}
+
+const TreasureHunt: React.FC<{ riddle: Riddle }> = (props) => {
   const getLocation = async () => {
     try {
       position = await Geolocation.getCurrentPosition();
       console.log('position: ', position);
-      const currentPosition = position;
+      setUserPosition({ ...position.coords });
     } catch (error) {
       console.log(error);
     }
   };
 
-  // const successfulRiddle = () => {
-  //   if (!props.riddle || !checkCode('LockSucceSS', inputCode)) return;
-  //   let updateRiddle = { ...props.riddle };
-  //   updateRiddle.isSuccess = true;
-  //   updateRiddle.timeSec = (new Date().getTime() - timeStart.getTime()) / 1000;
-  //   appCtx.updateRiddle(updateRiddle);
-  // };
+  const successfulRiddle = () => {
+    if (!props.riddle || !checkCode('Tre4surE', inputCode)) return;
+    let updateRiddle = { ...props.riddle };
+    updateRiddle.isSuccess = true;
+    updateRiddle.timeSec = (new Date().getTime() - timeStart.getTime()) / 1000;
+    appCtx.updateRiddle(updateRiddle);
+  };
 
   const appCtx = useContext(AppContext);
-  let position;
+
+  const [inputCode, setInputCode] = useState('');
+  const [userPosition, setUserPosition] = useState({} as Position);
+
+  let position: GeolocationPosition;
 
   getLocation();
 
   const timeStart = new Date();
-  const [inputCode, setInputCode] = useState('');
+  const startPosition = userPosition;
 
-  let userPosition = 0;
-  const startPosition = 0;
-
-  console.log('userPosition: ', userPosition);
-  /*
-    useEffect(() => {
-      userPosition.coords = appCtx.profile.position.coords;
-    }, [position]);
-  */
   return (
     <IonContent fullscreen>
       <IonGrid>
@@ -62,13 +66,26 @@ const TreasureHunt: React.FC = () => {
           <IonCol>
             <IonCard>
               <p>Position de départ :</p>
+              {startPosition ? (
+                <p>
+                  {startPosition.latitude} - {startPosition.longitude}
+                </p>
+              ) : (
+                <p>Pas de coordonnées</p>
+              )}
             </IonCard>
           </IonCol>
 
           <IonCol>
             <IonCard>
               <p>Position actuelle :</p>
-
+              {userPosition ? (
+                <p>
+                  {userPosition.latitude} - {userPosition.longitude}
+                </p>
+              ) : (
+                <p>Pas de coordonnées</p>
+              )}
             </IonCard>
           </IonCol>
         </IonRow>
@@ -79,6 +96,17 @@ const TreasureHunt: React.FC = () => {
               <IonLabel>getLocation</IonLabel>
             </IonButton>
           </IonCol>
+        </IonRow>
+        <IonRow>
+          <IonItem>
+            <IonInput
+              className="ion-text-center"
+              onIonChange={(event) => setInputCode(event.detail.value || '')}
+            ></IonInput>
+            <IonButton color="primary" onClick={successfulRiddle}>
+              Valider
+            </IonButton>
+          </IonItem>
         </IonRow>
       </IonGrid>
     </IonContent>
