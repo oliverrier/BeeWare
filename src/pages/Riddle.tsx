@@ -16,12 +16,14 @@ const Riddle: React.FC = () => {
   const Component = riddleWithCompnent?.component;
   return (
     <IonPage>
-      <IonHeader collapse="condense">
+      <IonHeader>
         <IonToolbar color={'primary'}>
           <IonButtons slot="start">
             <IonBackButton defaultHref="/" text="Back" />
           </IonButtons>
-          <IonTitle>Beeware</IonTitle>
+          <IonTitle className="ion-text-center">
+            Beeware
+          </IonTitle>
         </IonToolbar>
       </IonHeader>
       {Component && riddleWithCompnent ? <Component riddle={riddleWithCompnent} /> : 'Rien ici'}

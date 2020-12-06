@@ -39,9 +39,11 @@ const Home: React.FC = () => {
 
     return (
         <IonPage>
-            <IonHeader collapse="condense">
+            <IonHeader>
                 <IonToolbar color={'primary'}>
-                    <IonTitle>Beeware</IonTitle>
+                    <IonTitle className="ion-text-center">
+                        Beeware
+                        </IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>

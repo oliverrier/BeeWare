@@ -22,6 +22,7 @@ import {
   IonLabel,
   IonPage,
   IonRow,
+  IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import React, { useContext, useEffect, useState } from 'react';
@@ -80,10 +81,13 @@ const User: React.FC = () => {
     <IonPage>
       <IonContent>
         <IonHeader>
-          <IonToolbar>
+          <IonToolbar color={'primary'}>
             <IonButtons slot="start">
-              <IonBackButton defaultHref="home" text="Back" />
+              <IonBackButton defaultHref="/" text="Back" />
             </IonButtons>
+            <IonTitle className="ion-text-center">
+              Beeware
+            </IonTitle>
           </IonToolbar>
         </IonHeader>
         <IonCard>
